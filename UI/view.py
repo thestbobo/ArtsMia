@@ -13,10 +13,13 @@ class View(ft.UserControl):
         self._controller = None
         # graphical elements
         self._title = None
-        self.txt_name = None
+        self._txt_name = None
         self.btn_hello = None
         self.txt_result = None
         self.txt_container = None
+
+        self._ddLun = None
+        self._btnCercaPercorso = None
 
     def load_interface(self):
         # title
@@ -34,13 +37,25 @@ class View(ft.UserControl):
                                                   bgcolor="orange",
                                                   color="white",
                                                   width=200)
+        # Row 2
 
-        self._page.controls.append(ft.Row([self._btnAnalizzaOggetti, self._txtIdOggetto, self._btnCompConnessa],
+        self._ddLun = ft.Dropdown(label= "Lunghezza", border_color='orange', disabled=True)
+        self._btnCercaPercorso = ft.ElevatedButton(text="Cerca Oggetti", on_click=self._controller.handleCercaPercorso,
+                                                  bgcolor="orange",
+                                                  color="white",
+                                                  width=200, disabled=True)
+
+        self._page.controls.append(ft.Row([ft.Container(self._btnAnalizzaOggetti, width=250),
+                                           ft.Container(self._txtIdOggetto, width=250),
+                                           ft.Container(self._btnCompConnessa, width=250)],
                                           alignment=ft.MainAxisAlignment.CENTER))
+        self._page.controls.append(ft.Row([ft.Container(None,width=250),
+                                           ft.Container(self._ddLun, width=250),
+                                           ft.Container(self._btnCercaPercorso, width=250)], alignment=ft.MainAxisAlignment.CENTER))
 
         # List View where the reply is printed
-        self.txt_result = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
-        self._page.controls.append(self.txt_result)
+        self._txt_result = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
+        self._page.controls.append(self._txt_result)
         self._page.update()
 
     @property
